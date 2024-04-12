@@ -44,7 +44,7 @@ int main() {
 
     Dot d0 = dots[0];
     for (Dot d: dots){
-        if (d.x < d0.x || (d.x == d0.x && d.y < d0.y))
+        if (d.y < d0.y || (d.y == d0.y && d.x < d0.x))
             d0 = d;
     }
 
@@ -57,6 +57,11 @@ int main() {
         return (d1 ^ d2) > 0 || (d1 ^ d2) == 0 && (d1.x * d1.x + d1.y * d1.y) < (d2.x * d2.x + d2.y * d2.y);
     });
 
+    for (Dot &d: dots){
+        d.x += d0.x;
+        d.y += d0.y;
+    }
+
     vector<Dot> hull;
 
     for (Dot d : dots) {
@@ -66,16 +71,17 @@ int main() {
         hull.push_back(d);
     }
 
-    for (Dot d : hull) {
-        d.x += d0.x;
-        d.y += d0.y;
-    }
+
+
 
     cout << "Hull for this set of dots:" << endl;
     for (Dot d : hull) {
-        cout << "(" << d.x << ", " << d.y << ") ";
+        cout << "(" << d.x  << ", " << d.y<< ") ";
     }
     cout << endl;
+
+    if (hull.size() < dots.size()) cout << "No hull for every dot";
+    else cout << "Full hull";
     return 0;
 }
 
